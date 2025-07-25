@@ -127,7 +127,7 @@ interface CurrentPiece {
 }
 
 const Tetris: React.FC = () => {
-  const [boardWidth, setBoardWidth] = useState(calculateBoardWidth());
+  const boardWidth = calculateBoardWidth();
   const [board, setBoard] = useState<Board>(() => 
     Array(BOARD_HEIGHT).fill(null).map(() => Array(boardWidth).fill(null))
   );
@@ -144,25 +144,6 @@ const Tetris: React.FC = () => {
     const types = Object.keys(TETROMINOES) as TetrominoType[];
     return types[Math.floor(Math.random() * types.length)];
   }, []);
-
-  // 画面サイズ変更の監視
-  // 固定幅なのでリサイズイベントは不要（コメントアウト）
-  useEffect(() => {
-    // 固定幅のため、リサイズ処理は不要
-    // const handleResize = () => {
-    //   const newWidth = calculateBoardWidth();
-    //   if (newWidth !== boardWidth) {
-    //     setBoardWidth(newWidth);
-    //     setBoard(Array(BOARD_HEIGHT).fill(null).map(() => Array(newWidth).fill(null)));
-    //     setCurrentPiece(null);
-    //     setGameOver(false);
-    //     setIsPlaying(false);
-    //   }
-    // };
-
-    // window.addEventListener('resize', handleResize);
-    // return () => window.removeEventListener('resize', handleResize);
-  }, [boardWidth]);
 
   const isValidPosition = useCallback((piece: CurrentPiece, newPosition: Position): boolean => {
     for (let row = 0; row < piece.shape.length; row++) {
