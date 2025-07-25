@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+header {
+  margin-bottom: 3rem;
+  padding: 1rem 0;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -16,6 +21,15 @@
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes logo-spin {
