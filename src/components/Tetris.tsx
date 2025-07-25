@@ -105,15 +105,10 @@ const TETROMINOES = {
 
 const BOARD_HEIGHT = 10;
 
-// 画面幅に応じて動的にボード幅を計算
+// 固定幅設定でプロフィールカードと幅を揃える
 const calculateBoardWidth = () => {
-  if (typeof window !== 'undefined') {
-    const screenWidth = window.innerWidth;
-    // セルサイズ25px + ギャップを考慮して計算
-    const availableWidth = Math.min(screenWidth - 100, 800); // 最大800px
-    return Math.max(Math.floor(availableWidth / 25), 15); // 最小15列
-  }
-  return 20; // デフォルト値
+  // 固定幅：30列（750px）+ 左右パネル各50px = 850px総幅
+  return 30;
 };
 
 type TetrominoType = keyof typeof TETROMINOES;
@@ -151,20 +146,22 @@ const Tetris: React.FC = () => {
   }, []);
 
   // 画面サイズ変更の監視
+  // 固定幅なのでリサイズイベントは不要（コメントアウト）
   useEffect(() => {
-    const handleResize = () => {
-      const newWidth = calculateBoardWidth();
-      if (newWidth !== boardWidth) {
-        setBoardWidth(newWidth);
-        setBoard(Array(BOARD_HEIGHT).fill(null).map(() => Array(newWidth).fill(null)));
-        setCurrentPiece(null);
-        setGameOver(false);
-        setIsPlaying(false);
-      }
-    };
+    // 固定幅のため、リサイズ処理は不要
+    // const handleResize = () => {
+    //   const newWidth = calculateBoardWidth();
+    //   if (newWidth !== boardWidth) {
+    //     setBoardWidth(newWidth);
+    //     setBoard(Array(BOARD_HEIGHT).fill(null).map(() => Array(newWidth).fill(null)));
+    //     setCurrentPiece(null);
+    //     setGameOver(false);
+    //     setIsPlaying(false);
+    //   }
+    // };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    // window.addEventListener('resize', handleResize);
+    // return () => window.removeEventListener('resize', handleResize);
   }, [boardWidth]);
 
   const isValidPosition = useCallback((piece: CurrentPiece, newPosition: Position): boolean => {
