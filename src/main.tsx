@@ -5,6 +5,9 @@ import CssBaseline from '@mui/material/CssBaseline'
 import './index.css'
 import App from './App.tsx'
 
+// タイトルを設定
+document.title = 'ryo-arima';
+
 const theme = createTheme({
   palette: {
     mode: 'dark',

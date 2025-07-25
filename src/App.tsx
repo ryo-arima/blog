@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {
   Typography,
   Container,
@@ -17,6 +18,10 @@ import './App.css'
 import Tetris from './components/Tetris'
 
 function App() {
+  // ページタイトルを設定
+  useEffect(() => {
+    document.title = 'ryo-arima'
+  }, [])
 
   return (
     <Box sx={{ flexGrow: 1 }}>
