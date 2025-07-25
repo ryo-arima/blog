@@ -3,7 +3,6 @@ import {
   Box,
   Paper,
   Typography,
-  Button,
   Chip,
   IconButton,
 } from '@mui/material';
@@ -539,8 +538,55 @@ const Tetris: React.FC = () => {
   const displayBoardData = displayBoard();
 
   return (
-    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-      {/* Game Board - 一番上に配置 */}
+    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 0 }}>
+      {/* Left Panel - Score Display */}
+      <Paper 
+        elevation={4}
+        sx={{
+          width: `${2 * 25}px`, // 2列の幅
+          height: `${BOARD_HEIGHT * 25}px`, // ボードと同じ高さ
+          background: 'linear-gradient(135deg, rgba(100,108,255,0.3), rgba(97,218,251,0.3))',
+          border: '2px solid rgba(255,255,255,0.3)',
+          borderRadius: '8px 0 0 8px',
+          p: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}
+      >
+        <Box sx={{ textAlign: 'center', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Typography variant="caption" sx={{ color: 'white', opacity: 0.8, fontSize: '0.7em' }}>
+            SCORE
+          </Typography>
+          <Typography variant="h6" sx={{ 
+            color: '#61dafb', 
+            fontWeight: 'bold',
+            fontSize: '1.2em',
+            textShadow: '0 0 5px rgba(97,218,251,0.5)'
+          }}>
+            {score}
+          </Typography>
+        </Box>
+        
+        {gameOver && (
+          <Chip 
+            label="OVER"
+            color="error"
+            variant="filled"
+            size="small"
+            sx={{ fontSize: '0.6em', py: 0.5 }}
+          />
+        )}
+        
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography variant="caption" sx={{ color: 'white', opacity: 0.6, fontSize: '0.5em' }}>
+            5+ = 10pt
+          </Typography>
+        </Box>
+      </Paper>
+
+      {/* Center Panel - Game Board */}
       <Paper 
         elevation={6}
         sx={{
@@ -548,7 +594,7 @@ const Tetris: React.FC = () => {
           height: `${BOARD_HEIGHT * 25}px`,
           background: '#222',
           border: '3px solid #fff',
-          borderRadius: 2,
+          borderRadius: 0,
           p: 1,
           display: 'grid',
           gridTemplateRows: `repeat(${BOARD_HEIGHT}, 1fr)`,
@@ -583,142 +629,149 @@ const Tetris: React.FC = () => {
             ))}
           </Box>
         ))}
-      </Paper>
+        </Paper>
 
-      {/* Game Info - コンパクトな情報表示 */}
-      <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-        <Chip 
-          label={`Score: ${score}`}
-          color="secondary"
-          variant="filled"
-          sx={{ fontSize: '1em', fontWeight: 'bold' }}
-        />
-        <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
-          Horizontal Tetris
-        </Typography>
-        {gameOver && (
-          <Chip 
-            label="GAME OVER"
-            color="error"
-            variant="filled"
-            sx={{ fontSize: '1em', fontWeight: 'bold' }}
-          />
-        )}
-      </Box>
-
-      {/* Controls - コンパクトなコントロール */}
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'center' }}>
-        {/* Game Control Buttons */}
-        <Box sx={{ display: 'flex', gap: 1 }}>
+      {/* Right Panel - Controls */}
+      <Paper 
+        elevation={4}
+        sx={{
+          width: `${2 * 25}px`, // 2列の幅
+          height: `${BOARD_HEIGHT * 25}px`, // ボードと同じ高さ
+          background: 'linear-gradient(135deg, rgba(255,107,107,0.3), rgba(238,90,82,0.3))',
+          border: '2px solid rgba(255,255,255,0.3)',
+          borderRadius: '0 8px 8px 0',
+          p: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}
+      >
+        {/* Game Control Button */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 1 }}>
           {!isPlaying ? (
-            <Button 
-              variant="contained"
+            <IconButton
               onClick={startGame}
-              startIcon={gameOver ? <Refresh /> : <PlayArrow />}
-              size="small"
               sx={{
-                background: 'linear-gradient(45deg, #ff6b6b, #ee5a52)',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, #ee5a52, #ff6b6b)',
-                }
+                backgroundColor: 'rgba(255,107,107,0.4)',
+                '&:hover': { backgroundColor: 'rgba(255,107,107,0.6)' },
+                color: 'white',
+                width: 32,
+                height: 32,
+                borderRadius: 1
               }}
-            >
-              {gameOver ? 'Restart' : 'Start'}
-            </Button>
-          ) : (
-            <Button 
-              variant="contained"
-              onClick={pauseGame}
-              startIcon={<Pause />}
-              color="warning"
               size="small"
+              title={gameOver ? 'Restart' : 'Start'}
             >
-              Pause
-            </Button>
+              {gameOver ? <Refresh sx={{ fontSize: '1em' }} /> : <PlayArrow sx={{ fontSize: '1em' }} />}
+            </IconButton>
+          ) : (
+            <IconButton
+              onClick={pauseGame}
+              sx={{
+                backgroundColor: 'rgba(255,193,7,0.4)',
+                '&:hover': { backgroundColor: 'rgba(255,193,7,0.6)' },
+                color: 'white',
+                width: 32,
+                height: 32,
+                borderRadius: 1
+              }}
+              size="small"
+              title="Pause"
+            >
+              <Pause sx={{ fontSize: '1em' }} />
+            </IconButton>
           )}
         </Box>
 
-        {/* Movement Controls */}
-        {isPlaying && !gameOver && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5 }}>
-            {/* 上ボタン（上方向移動） */}
-            <IconButton
-              onClick={() => movePiece('left')}
-              sx={{ 
-                backgroundColor: 'rgba(255,255,255,0.1)',
-                '&:hover': { backgroundColor: 'rgba(255,255,255,0.2)' },
-                color: 'white'
-              }}
-              size="small"
-              title="上に移動"
-            >
-              <KeyboardArrowUp />
-            </IconButton>
-            
-            {/* 中央の横ボタンと回転ボタン */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-              <IconButton
-                onClick={() => movePiece('down')}
-                sx={{ 
-                  backgroundColor: 'rgba(100,255,100,0.3)',
-                  '&:hover': { backgroundColor: 'rgba(100,255,100,0.5)' },
-                  color: 'white'
-                }}
-                size="small"
-                title="右に落下（加速）"
-              >
-                <KeyboardArrowLeft />
-              </IconButton>
-              
-              <IconButton
-                onClick={rotatePiece}
-                sx={{ 
-                  backgroundColor: 'rgba(255,100,100,0.3)',
-                  '&:hover': { backgroundColor: 'rgba(255,100,100,0.5)' },
-                  color: 'white',
-                  mx: 1
-                }}
-                size="small"
-                title="回転"
-              >
-                <RotateRight />
-              </IconButton>
-              
-              <IconButton
-                onClick={() => movePiece('down')}
-                sx={{ 
-                  backgroundColor: 'rgba(100,255,100,0.3)',
-                  '&:hover': { backgroundColor: 'rgba(100,255,100,0.5)' },
-                  color: 'white'
-                }}
-                size="small"
-                title="右に落下（加速）"
-              >
-                <KeyboardArrowRight />
-              </IconButton>
-            </Box>
-            
-            {/* 下ボタン（下方向移動） */}
-            <IconButton
-              onClick={() => movePiece('right')}
-              sx={{ 
-                backgroundColor: 'rgba(255,255,255,0.1)',
-                '&:hover': { backgroundColor: 'rgba(255,255,255,0.2)' },
-                color: 'white'
-              }}
-              size="small"
-              title="下に移動"
-            >
-              <KeyboardArrowDown />
-            </IconButton>
-            
-            {/* 操作説明 */}
-            <Typography variant="caption" sx={{ color: 'white', textAlign: 'center', mt: 1, fontSize: '0.7em' }}>
-              ↑↓: 上下移動 | ←→: 右に落下 | 🔄: 回転 | 完全な列で消去 | 5つ以上で+10pt/ブロック
-            </Typography>
-          </Box>
-        )}
-      </Box>
+        {/* All Control Buttons - 縦並び */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.8, flex: 1, justifyContent: 'center' }}>
+          {/* 上ボタン（上方向移動） */}
+          <IconButton
+            onClick={() => movePiece('left')}
+            sx={{ 
+              backgroundColor: 'rgba(255,255,255,0.2)',
+              '&:hover': { backgroundColor: 'rgba(255,255,255,0.3)' },
+              color: 'white',
+              width: 32,
+              height: 32,
+              borderRadius: 1
+            }}
+            size="small"
+            title="上に移動"
+          >
+            <KeyboardArrowUp sx={{ fontSize: '1em' }} />
+          </IconButton>
+          
+          {/* 左ボタン（右に落下） */}
+          <IconButton
+            onClick={() => movePiece('down')}
+            sx={{ 
+              backgroundColor: 'rgba(100,255,100,0.4)',
+              '&:hover': { backgroundColor: 'rgba(100,255,100,0.6)' },
+              color: 'white',
+              width: 32,
+              height: 32,
+              borderRadius: 1
+            }}
+            size="small"
+            title="右に落下"
+          >
+            <KeyboardArrowLeft sx={{ fontSize: '1em' }} />
+          </IconButton>
+          
+          {/* 回転ボタン */}
+          <IconButton
+            onClick={rotatePiece}
+            sx={{ 
+              backgroundColor: 'rgba(255,100,100,0.4)',
+              '&:hover': { backgroundColor: 'rgba(255,100,100,0.6)' },
+              color: 'white',
+              width: 32,
+              height: 32,
+              borderRadius: 1
+            }}
+            size="small"
+            title="回転"
+          >
+            <RotateRight sx={{ fontSize: '1em' }} />
+          </IconButton>
+          
+          {/* 右ボタン（右に落下） */}
+          <IconButton
+            onClick={() => movePiece('down')}
+            sx={{ 
+              backgroundColor: 'rgba(100,255,100,0.4)',
+              '&:hover': { backgroundColor: 'rgba(100,255,100,0.6)' },
+              color: 'white',
+              width: 32,
+              height: 32,
+              borderRadius: 1
+            }}
+            size="small"
+            title="右に落下"
+          >
+            <KeyboardArrowRight sx={{ fontSize: '1em' }} />
+          </IconButton>
+          
+          {/* 下ボタン（下方向移動） */}
+          <IconButton
+            onClick={() => movePiece('right')}
+            sx={{ 
+              backgroundColor: 'rgba(255,255,255,0.2)',
+              '&:hover': { backgroundColor: 'rgba(255,255,255,0.3)' },
+              color: 'white',
+              width: 32,
+              height: 32,
+              borderRadius: 1
+            }}
+            size="small"
+            title="下に移動"
+          >
+            <KeyboardArrowDown sx={{ fontSize: '1em' }} />
+          </IconButton>
+        </Box>
+      </Paper>
     </Box>
   );
 };

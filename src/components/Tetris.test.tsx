@@ -39,19 +39,21 @@ describe('Tetris Component', () => {
   })
 
   describe('Initial Rendering', () => {
-    it('should render the game title', () => {
+    it('should render score display', () => {
       render(<TetrisWrapper />)
-      expect(screen.getByText('Horizontal Tetris')).toBeInTheDocument()
+      expect(screen.getByText('SCORE')).toBeInTheDocument()
+      expect(screen.getByText('0')).toBeInTheDocument()
     })
 
     it('should render start button initially', () => {
       render(<TetrisWrapper />)
+      // アイコンボタンになったので、title属性で確認
       expect(screen.getByRole('button', { name: /start/i })).toBeInTheDocument()
     })
 
-    it('should render initial score as 0', () => {
+    it('should render scoring rule', () => {
       render(<TetrisWrapper />)
-      expect(screen.getByText('Score: 0')).toBeInTheDocument()
+      expect(screen.getByText('5+ = 10pt')).toBeInTheDocument()
     })
   })
 
