@@ -10,6 +10,7 @@ import {
   Code,
   X,
   GitHub,
+  Article,
 } from '@mui/icons-material'
 import ryoArimaImage from './assets/ryo-arima.png'
 import './App.css'
@@ -96,6 +97,10 @@ function App() {
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                     <GitHub sx={{ color: '#61dafb', fontSize: '1rem' }} />
                     <a href="https://github.com/ryo-arima" style={{ color: '#61dafb', textDecoration: 'none' }}>github.com/ryo-arima</a>
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                    <Article sx={{ color: '#55c500', fontSize: '1rem' }} />
+                    <a href="https://qiita.com/ryo-arima" style={{ color: '#61dafb', textDecoration: 'none' }}>qiita.com/ryo-arima</a>
                   </Box>
                 </Box>
               </Box>

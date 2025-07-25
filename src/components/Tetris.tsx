@@ -575,12 +575,6 @@ const Tetris: React.FC = () => {
             sx={{ fontSize: '0.6em', py: 0.5 }}
           />
         )}
-        
-        <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="caption" sx={{ color: 'white', opacity: 0.6, fontSize: '0.5em' }}>
-            5+ = 10pt
-          </Typography>
-        </Box>
       </Paper>
 
       {/* Center Panel - Game Board */}
